@@ -82,10 +82,12 @@ fi = (function() {
     },
 
     flatten: function(collection, single=false, newArr=[]) {
-      newArr = [];
-      for (const key in collection) {
-        if (collection[key].typeof === 'object') {
-          collection[key].flat()
+      if (single) { return collection.flat() }
+      if (!(collection instanceof Array)) {
+        return newArr.push(collection)
+      } else {
+      for (const value of collection) {
+        fi.flatten(value, false, newArr);
         }
       }
       return newArr;
